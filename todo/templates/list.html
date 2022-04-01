@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block welcome %}
+  <div id="welcome">
+    <h5>{{ user.username }}</h5>
+    <h1>To-do list</h1>
+    <h5><a href="{% url 'logout' %}?next={% url 'todo:all' %}">Logout</a></h5>
+  </div>
+{% endblock welcome %}
+{% block content %}
+{% if group_list %}
+    {% for group in group_list %}
+<div id="group">
+  <div id="group_name">
+    <h2>{{group.title}}</h2>
+  </div>  
+  <div id="group_controls">
+  <a href="{% url 'todo:create' group.id %}"><i class="fa-solid fa-plus"></i></a>
+  <a href="{% url 'todo:group_update' group.id %}"><i class="fa-solid fa-pen"></i></a>
+  <a href="{% url 'todo:group_delete' group.id %}"><i class="fa-solid fa-trash"></i></a>
+  </div>
+</div>
+{% if note_list %}
+{% for note in note_list %}
+{% if note.group_id_id == group.id %}
+<div id="note">
+  <div id="note_done">
+    <a href="#" onclick="favPost('{% url 'todo:thing_undone' note.id %}', {{ note.id }} );return false;"
+      {% if note.id not in done_list %} style="display: none;" {% endif %} id="done_{{note.id}}"><i
+        class="fa-solid fa-circle-check"></i></a>
+    <!-- the second href -->
+    <a href="#" onclick="favPost('{% url 'todo:thing_done' note.id %}', {{ note.id }} );return false;"
+      <{% if note.id in done_list %} style="display: none;" {% endif %} id="undone_{{note.id}}"><i class="fa-regular fa-circle"></i></a>
+  </div>
+  <div id="note_title">
+  <h3 {% if note.id not in done_list %} style="display: none;"{% endif %}id="done_text_{{note.id}}">
+    <s>{{note.title}}</s></h3>
+  <h3 {% if note.id in done_list %} style="display: none;" {% endif %}id="undone_text_{{note.id}}">
+    {{note.title}}</h3>
+  </div>
+    <div id="note_controls">
+    <p>{{ note.updated_at|naturaltime }}</p>
+    <a href="{% url 'todo:update' note.id %}"><i class="fa-solid fa-pen"></i></a>
+    <a href="{% url 'todo:delete' note.id %}"><i class="fa-solid fa-trash"></i></a>
+  </div>
+</div>
+    {% endif %}
+    {% endfor %}
+    {% else %}
+    <p>There are no Tasks in the database.</p>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    <br><a href="{% url 'todo:group_create' %}" style="text-align: center;">Create Group</a>
+
+    <script>
+      function favPost(url, note_id) {
+        $.post(url, function (data) {
+          console.log(url, 'finished');
+          $('#done_' + note_id).toggle();
+          $('#done_text_' + note_id).toggle();
+          $('#undone_' + note_id).toggle();
+          $('#undone_text_' + note_id).toggle();
+        }).fail(function (xhr) {
+          alert('Url failed with ' + xhr.status + ' ' + url);
+        });
+      };
+    </script>
+    {% endblock %}

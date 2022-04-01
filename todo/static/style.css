@@ -1,0 +1,88 @@
+body {
+    display: flex;
+    justify-content: center;
+    display: grid;
+    grid-template-columns:95%;
+}
+
+.container {
+    margin-top: 20%;
+}
+
+#welcome {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+#group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#group_name {
+    width: fit-content;
+    left: 3%;
+}
+
+#group_controls {
+    display: flex;
+    align-items: center;
+}
+
+#group_controls a {
+    font-size: x-large;
+    padding-left: 5%;
+}
+
+#note {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#note_title {
+    width: 90%;
+    justify-self: start;
+}
+
+#note_title h3 {
+    align-self: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: start;
+    margin-left: 1%;
+}
+
+#note_done {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#note_done a {
+    font-size: xx-large;
+    align-self:center;
+}
+
+#note_controls {
+    display: flex;
+    align-items: center;
+    justify-self: flex-end;
+
+}
+
+#note_controls p {
+    font-size: xx-small;
+    padding-right: 10%;
+}
+
+#note_controls a {
+    font-size: large;
+    padding-right: 10%;
+}
